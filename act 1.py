@@ -1,15 +1,4 @@
-"""Paint, for drawing shapes.
-
-Exercises
-
-1. Add a color.
-2. Complete circle.
-3. Complete rectangle.
-4. Complete triangle.
-5. Add width parameter.
-
-"""
-
+#Librerías para el programa
 from turtle import *
 from freegames import vector
 import math
@@ -17,15 +6,15 @@ import math
 
 onkey(lambda: color(green), 'G')
 
+#Dibuja una línea
 def line(start, end):
-    "Draw line from start to end."
     up()
     goto(start.x, start.y)
     down()
     goto(end.x, end.y)
-  
+
+#Dibuja un cuadrado
 def square(start, end):
-    "Draw square from start to end."
     up()
     goto(start.x, start.y)
     down()
@@ -41,7 +30,6 @@ def square(start, end):
 # su nombre tenia conflicto con la funcion de `circle` en la
 # libreria de turtle
 def draw_circle(start, end):
-    "Draw circle from start to end."
     radius = math.sqrt((end.x - start.x)**2 + (end.y - start.y)**2)
     
     up()
@@ -52,17 +40,36 @@ def draw_circle(start, end):
     
     end_fill()
 
-
+#Dibuja un rectángulo con la dimensión de la línea dibujada y ese lado multiplicado por 1.5
 def rectangle(start, end):
-    "Draw rectangle from start to end."
-    pass  # TODO
+    up()
+    goto(start.x, start.y)
+    down()
+    begin_fill()
+    
+    side1 = end.x - start.x
+    for count in range(2):
+        forward(side1*1.5)
+        left(90)
+        forward(side1)
+        left(90)
+    end_fill()
+    pass
 
+#Crea un triángulo equilátero con las dimensiones de la línea dibujada
 def triangle(start, end):
-    "Draw triangle from start to end."
-    pass  # TODO
+    up()
+    goto(start.x, start.y)
+    down()
+    begin_fill()
+    for count in range(2):
+        forward(end.x - start.x)
+        left(90)
+    end_fill()
+    pass
 
+#Almacena el punto de inicio o dibuja la figura
 def tap(x, y):
-    "Store starting point or draw shape."
     start = state['start']
 
     if start is None:
@@ -72,9 +79,9 @@ def tap(x, y):
         end = vector(x, y)
         shape(start, end)
         state['start'] = None
-
+        
+#llmacena el valor en state[key]
 def store(key, value):
-    "Store value in state at key."
     state[key] = value
 
 state = {'start': None, 'shape': line}
@@ -82,12 +89,14 @@ setup(420, 420, 370, 0)
 onscreenclick(tap)
 listen()
 onkey(undo, 'u')
+
+#Llamada de funciones
 onkey(lambda: color('black'), 'K')
 onkey(lambda: color('white'), 'W')
 onkey(lambda: color('green'), 'G')
 onkey(lambda: color('blue'), 'B')
 onkey(lambda: color('red'), 'R')
-onkey(lambda: color('pink'), 'p') #NEW COLOR
+onkey(lambda: color('pink'), 'P') #NEW COLOR
 onkey(lambda: store('shape', line), 'l')
 onkey(lambda: store('shape', square), 's')
 onkey(lambda: store('shape', draw_circle), 'c')
